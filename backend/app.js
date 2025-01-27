@@ -3,14 +3,17 @@ const app = express();
 require("dotenv").config();
 
 const { connectDB } = require("./config/db_connect");
-
+const userRoutes = require("./routes/user.routes");
+const errorHandler = require("./middlewares/errorHandler");
 connectDB();
 
-//console.log(process.env.DATABASE_URL);
-app.get("/", (req, res) => {
-  res.send("hello ! ");
-});
+app.use(express.json());
 
+app.use("/user", userRoutes);
+
+app.use(errorHandler);
+
+const port = 4000;
 app.listen(4000, () => {
-  console.log("server is running on port 3000");
+  console.log(`server is running on port ${port}`);
 });
